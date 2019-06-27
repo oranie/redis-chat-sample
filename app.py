@@ -1,6 +1,7 @@
 from chalice import Chalice
 from datetime import datetime
 from chalicelib.redis import create_connection
+import json
 
 app = Chalice(app_name='helloworld')
 
@@ -16,31 +17,36 @@ def index():
 
 @app.route('/chat/comment/add',methods=['POST'])
 def comment_add():
-    user_as_json = app.current_request.json_body
-    print(user_as_json)
+    body = {
+    }
+
+    request = app.current_request.json_body
+    body = request
 
     rc = create_connection()
-    response_xadd = rc.xadd("chat", "*", 100,{"name": "data"})
+    response_xadd = rc.xadd("chat", "*", 100,{body['name']:body['comment']})
     print(response_xadd)
 
     response_xrange = rc.xrange("chat","-","+")
-
     print(response_xrange)
 
-    return {'state' : 'Commment add OK.comment seq id is '+ response_xadd}
+    return {'state' : 'Commment add OK',"comment_seq_id": response_xadd}
 
 @app.route('/chat/comment/all')
 def comment_list_get():
     rc = create_connection()
     response = rc.xrange("chat","-","+")
 
-    return {response}
+    return {'response': response}
 
-@app.route('/chat/comment/latest',methods=['POST'])
-def comment_list_get():
+@app.route('/chat/comment/latest/{seq_id}',methods=['GET'])
+def comment_list_get(seq_id):
+    request = app.current_request
+
     rc = create_connection()
+    response = rc.xrange("chat",seq_id,"+")
 
-    return {'':''}
+    return {'response':response}
 
 
 
