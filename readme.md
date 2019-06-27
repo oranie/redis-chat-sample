@@ -2,6 +2,17 @@ This project is internal trainning and demo app.
 
 Redis and DynamoDB sample app
 
+## Deploy
+local test
+```$xslt
+ chalice local --stage local
+```
+
+deploy
+```$xslt
+chalice deploy
+```
+
 
 ## Ranking
 Redis : using sortedset data type
