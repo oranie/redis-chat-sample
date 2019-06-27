@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "app_name": "helloworld",
+  "subnet_ids": ["subnet-a871b0f1", "subnet-002b8477","subnet-0ee3ba2b887899461","subnet-c70d07b1"],
+  "security_group_ids": ["sg-2379e846"],
+  "stages": {
+    "local": {
+      "api_gateway_stage": "api",
+      "environment_variables": {
+        "REDIS_ENDPOINT": "localhost",
+        "REDIS_PORT": "7000"
+      }
+    },
+    "dev": {
+      "environment_variables": {
+        "REDIS_ENDPOINT": "oranie-cluster.ab0uwo.clustercfg.apne1.cache.amazonaws.com",
+        "REDIS_PORT": "6379"
+      }
+    }
+  }
+}
