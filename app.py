@@ -1,29 +1,47 @@
 from chalice import Chalice
-from rediscluster import StrictRedisCluster
 from datetime import datetime
-import os
+from chalicelib.redis import create_connection
 
 app = Chalice(app_name='helloworld')
 
-
-
-
 @app.route('/')
 def index():
-    print(os.environ['REDIS_ENDPOINT'])
-    print(os.environ['REDIS_PORT'])
-    try:
-        #startup_nodes = [{"host": "oranie-cluster.ab0uwo.clustercfg.apne1.cache.amazonaws.com", "port": "7000"}]
-        startup_nodes = [{"host": os.environ['REDIS_ENDPOINT'], "port": os.environ['REDIS_PORT']}]
-        rc = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=True, skip_full_coverage_check=True,socket_timeout=1, socket_connect_timeout=1)
-    except Exception as e:
-        print(e)
+    rc = create_connection()
 
     now = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     rc.set("key1", now)
 
     result = rc.get("key1")
-    return {'hello': result}
+    return {'status': 'server is good!  ' + result}
+
+@app.route('/chat/comment/add',methods=['POST'])
+def comment_add():
+    user_as_json = app.current_request.json_body
+    print(user_as_json)
+
+    rc = create_connection()
+    response_xadd = rc.xadd("chat", "*", 100,{"name": "data"})
+    print(response_xadd)
+
+    response_xrange = rc.xrange("chat","-","+")
+
+    print(response_xrange)
+
+    return {'state' : 'Commment add OK.comment seq id is '+ response_xadd}
+
+@app.route('/chat/comment/all')
+def comment_list_get():
+    rc = create_connection()
+    response = rc.xrange("chat","-","+")
+
+    return {response}
+
+@app.route('/chat/comment/latest',methods=['POST'])
+def comment_list_get():
+    rc = create_connection()
+
+    return {'':''}
+
 
 
 
