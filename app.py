@@ -37,6 +37,14 @@ def comment_list_get():
     return {'response': response}
 
 
+@app.route('/chat/comments/latest', methods=['GET'], cors=True)
+def comment_list_get():
+    rc = create_connection()
+    response = rc.xrevrange("chat", "+", "-", "COUNT", "50")
+
+    return {'response': response}
+
+
 @app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
 def comment_list_get(latest_seq_id):
     latest = latest_seq_id.split('-')
