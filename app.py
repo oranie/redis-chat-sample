@@ -5,6 +5,7 @@ import json
 
 app = Chalice(app_name='helloworld')
 
+
 @app.route('/')
 def index():
     rc = create_connection()
@@ -15,54 +16,41 @@ def index():
     result = rc.get("key1")
     return {'status': 'server is good!  ' + result}
 
-@app.route('/chat/comments/add',methods=['POST'],cors=True)
+
+@app.route('/chat/comments/add', methods=['POST'], cors=True)
 def comment_add():
-    method = app.current_request.method
-    if method == 'OPTIONS':
-        headers = {
-            'Access-Control-Allow-Method': 'GET,OPTIONS',
-            'Access-Control-Allow-Origin': ','.join(_ALLOWED_ORIGINS),
-            'Access-Control-Allow-Headers': 'X-Some-Header',
-        }
-        origin = app.current_request.headers.get('origin', '')
-        if origin in _ALLOWED_ORIGINS:
-            headers.update({'Access-Control-Allow-Origin': origin})
-        return Response(
-            body=None,
-            headers=headers,
-        )
-    elif method == 'POST':
-        body = {
-        }
-        raw_body = app.current_request.raw_body.decode()
-        body = json.loads(raw_body)
-        print(body)
+    raw_body = app.current_request.raw_body.decode()
+    body = json.loads(raw_body)
+    print(body)
 
-        rc = create_connection()
-        response_xadd = rc.xadd("chat", "*", 100,{body['name']:body['comment']})
-        print(response_xadd)
+    rc = create_connection()
+    response_xadd = rc.xadd("chat", "*", 100, {body['name']: body['comment']})
 
-        response_xrange = rc.xrange("chat","-","+")
-        print(response_xrange)
+    return {'state': 'Commment add OK', "comment_seq_id": response_xadd}
 
-        return {'state' : 'Commment add OK',"comment_seq_id": response_xadd}
 
-@app.route('/chat/comments/all',methods=['GET'],cors=True)
+@app.route('/chat/comments/all', methods=['GET'], cors=True)
 def comment_list_get():
     rc = create_connection()
-    response = rc.xrange("chat","-","+")
+    response = rc.xrange("chat", "-", "+")
 
     return {'response': response}
 
-@app.route('/chat/comments/latest/{seq_id}',methods=['GET'],cors=True)
-def comment_list_get(seq_id):
-    request = app.current_request
+
+@app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
+def comment_list_get(latest_seq_id):
+    latest = latest_seq_id.split('-')
+    print(latest)
+
+    next_id = int(latest[1])
+    next_id += 1
+    next_seq_id = f'{latest[0]}-{next_id}'
+    print(next_seq_id)
 
     rc = create_connection()
-    response = rc.xrange("chat",seq_id,"+")
+    response = rc.xrange("chat", next_seq_id, "+")
 
-    return {'response':response}
-
+    return {'response': response}
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
