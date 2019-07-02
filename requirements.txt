@@ -1,1 +1,1 @@
-redis-py-cloud
+redis-py-cluster
