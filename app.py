@@ -2,7 +2,6 @@ from chalice import Chalice
 from datetime import datetime
 from chalicelib.redis import StreamStrictRedisCluster
 from chalicelib.redis import create_connection
-import json
 
 app = Chalice(app_name='chalice-nosql-sample')
 
