@@ -14,8 +14,8 @@
     {
       "name": "rest_api",
       "resource_type": "rest_api",
-      "rest_api_id": "zrtfblms81",
-      "rest_api_url": "https://zrtfblms81.execute-api.ap-northeast-1.amazonaws.com/api/"
+      "rest_api_id": "xgc5p4eaah",
+      "rest_api_url": "https://xgc5p4eaah.execute-api.ap-northeast-1.amazonaws.com/api/"
     }
   ],
   "schema_version": "2.0",

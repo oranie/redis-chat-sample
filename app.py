@@ -7,7 +7,7 @@ import json
 app = Chalice(app_name='chalice-nosql-sample')
 
 
-@app.route('/')
+@app.route('/', cors=True)
 def index():
     now = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
@@ -44,10 +44,12 @@ def comment_list_get():
     response = rc.xrevrange("chat", "+", "-", "COUNT", "50")
     return {'response': response}
 
+
+'''
 @app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
 def comment_list_get(latest_seq_id):
     latest_list = latest_seq_id.split('-')
-    print(latest_list)
+    #print(latest_list)
 
     next_id = int(latest_list[1])
     next_id += 1
@@ -58,3 +60,4 @@ def comment_list_get(latest_seq_id):
     response = rc.xrange("chat", next_seq_id, "+")
 
     return {'response': response}
+'''
