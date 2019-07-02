@@ -17,9 +17,9 @@
 </head>
 <body>
 <div id="app">
+    <p>{{ title }}</p>
     <button v-on:click="refresh" class="btn btn-primary">Refresh server status
     </button>
-    <p>{{ title }}</p>
     <table class="table">
         <tr v-for="server_status">
             <td>{{ server_status.status }}</td>
@@ -50,18 +50,20 @@
     });
 </script>
 
+
 <div id="add">
     <form @submit.prevent="onsubmit">
-        <div class="form-group">
+        <div class="form-row">
+            <div class="col">
             <label>Name</label>
             <input
                     class="form-control"
                     v-model="form.name"
                     type="text"
                     required
-                    placeholder="oranie">
-        </div>
-        <div class="form-group">
+                    placeholder="ユーザー名をいれてね">
+            </div>
+            <div class="col">
             <label>Comment</label>
             <input
                     class="form-control"
@@ -69,6 +71,7 @@
                     type="text"
                     title="comment"
                     placeholder="なにかかいてね">
+            </div>
         </div>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Submit
@@ -106,6 +109,7 @@
     </button>
 
     <table class="table">
+
         <tr v-for="latest_comments">
             <td>{{ latest_comments.response }}</td>
         </tr>

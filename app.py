@@ -20,8 +20,7 @@ def index():
 
 @app.route('/chat/comments/add', methods=['POST'], cors=True)
 def comment_add():
-    raw_body = app.current_request.raw_body.decode()
-    body = json.loads(raw_body)
+    body = app.current_request.json_body
     print(body)
 
     rc = create_connection()
@@ -37,15 +36,15 @@ def comment_list_get():
     response = rc.xrange("chat", "-", "+")
     return {'response': response}
 
+
 @app.route('/chat/comments/latest', methods=['GET'], cors=True)
 def comment_list_get():
     rc = create_connection()
 
-    response = rc.xrevrange("chat", "+", "-", "COUNT", "50")
+    response = rc.xrevrange("chat", "+", "-", "COUNT", "20")
     return {'response': response}
 
 
-'''
 @app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
 def comment_list_get(latest_seq_id):
     latest_list = latest_seq_id.split('-')
@@ -60,4 +59,3 @@ def comment_list_get(latest_seq_id):
     response = rc.xrange("chat", next_seq_id, "+")
 
     return {'response': response}
-'''
