@@ -17,7 +17,8 @@
 </head>
 <body>
 <div id="app">
-    <button v-on:click="refresh">Refresh status</button>
+    <button v-on:click="refresh" class="btn btn-primary">Refresh server status
+    </button>
     <p>{{ title }}</p>
     <table class="table">
         <tr v-for="server_status">
@@ -40,7 +41,7 @@
         methods: {
             refresh: function (e) {
                 axios.get('http://localhost:8000/', {}).then(
-                    response = > {
+                    response => {
                     this.server_status = response.data;
             })
                 ;
@@ -70,9 +71,7 @@
                     placeholder="なにかかいてね">
         </div>
         <div class="form-group">
-            <button
-                    class="btn btn-primary"
-                    type="submit">Submit
+            <button class="btn btn-primary" type="submit">Submit
             </button>
         </div>
     </form>
@@ -80,7 +79,7 @@
 </div>
 
 <script>
-    new Vue({
+    var add =new Vue({
         el: "#add",
         data() {
             return {
@@ -94,49 +93,78 @@
                     name: this.form.name,
                     comment: this.form.comment
                 }).then(
-                    response = > {
+                    response => {
                     this.result = Object.assign({}, this.form);
-            })
-                ;
+                });
             }
         }
     });
 </script>
 
-
-<div id="all">
-    <button v-on:click="all">all messages</button>
+<div id="latest">
+    <button v-on:click="get_latest" class="btn btn-primary">latest messages
+    </button>
 
     <table class="table">
-        <tr v-for="comments">
-            <td>{{ comments.response }}</td>
+        <tr v-for="latest_comments">
+            <td>{{ latest_comments.response }}</td>
         </tr>
     </table>
 </div>
 
 <script>
-    var all = new Vue({
+    var latest_comments = new Vue({
+        el: "#latest",
+        data: {
+            title: "Chat",
+            latest_comments: []
+        },
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+        },
+        "methods": {
+            get_latest: function (e) {
+                axios.get('http://localhost:8000/chat/comments/latest', {}).then(
+                    response => {
+                        this.latest_comments = response.data;
+                });
+            }
+        }
+    });
+</script>
+
+<div id="all">
+    <button v-on:click="get_all" class="btn btn-primary">all messages
+    </button>
+
+    <table class="table">
+        <tr v-for="all_comments">
+            <td>{{ all_comments.response }}</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    var all_comments = new Vue({
         el: "#all",
         data: {
             title: "Chat",
-            comments: []
+            all_comments: []
         },
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
             'Access-Control-Allow-Origin': '*',
         },
         methods: {
-            all: function (e) {
+            get_all: function (e) {
                 axios.get('http://localhost:8000/chat/comments/all', {}).then(
-                    response = > {
-                    this.comments = response.data;
-            })
-                ;
+                    response => {
+                    this.all_comments = response.data;
+                });
             }
         }
     });
 </script>
-
-
 </body>
 </html></body>

@@ -17,8 +17,8 @@ class StreamStrictRedisCluster(StrictRedisCluster):
     #   super(StreamStrictRedisCluster, self).__init__()
 
     # response_xadd = rc.xadd("chat", "*", 100, {body['name']: body['comment']})
-    def xadd(self, stream, seq_id, size, value):
-        args = ["XADD", stream, seq_id, size, value]
+    def xadd(self, stream, seq_id, key, value):
+        args = ["XADD", stream, seq_id, key, value]
         print(args)
         response = self.execute_command(*args)
         return response

@@ -26,7 +26,7 @@ def comment_add():
 
     rc = create_connection()
 
-    response_xadd = rc.xadd("chat", "*", 100, {body['name']: body['comment']})
+    response_xadd = rc.xadd("chat", "*", "key", {body['name']: body['comment']})
     return {'state': 'Commment add OK', "comment_seq_id": response_xadd}
 
 
