@@ -29,6 +29,11 @@ def stream_data_to_json(response):
             else:
                 seq_id = response[r][i]
 
+    # example data struct :
+    # [
+    #   {'name': 'ザビオ', 'comment': 'zabbix', 'stream_seq_id': '1562118551119-0'},
+    #   {'name': 'ザビオ', 'comment': 'zabbix', 'stream_seq_id': '1562118550261-0'}
+    #  ]
     logging.info('latest comments data : %s', latest_comments)
     return latest_comments
 

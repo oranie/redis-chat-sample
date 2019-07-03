@@ -57,7 +57,9 @@
             </button>
         </div>
     </form>
+
     <pre>{{ result }}</pre>
+    <pre>{{ latest_comments }}</pre>
 </div>
 
 <div id="latest">
@@ -68,11 +70,13 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Comment</th>
         </tr>
         </thead>
         <tr v-for="comment in latest_comments.response">
+            <td>{{ comment.stream_seq_id }}</td>
             <td>{{ comment.name }}</td>
             <td>{{ comment.comment }}</td>
         </tr>
@@ -87,11 +91,13 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Comment</th>
         </tr>
         </thead>
         <tr v-for="comment in all_comments.response">
+            <td>{{ comment.stream_seq_id }}</td>
             <td>{{ comment.name }}</td>
             <td>{{ comment.comment }}</td>
         </tr>
@@ -128,7 +134,8 @@
             return {
                 form: {},
                 result: {},
-                latest: {}
+                url: {},
+                latest_comments: {}
             }
         },
         methods: {
