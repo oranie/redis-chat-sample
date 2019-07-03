@@ -45,7 +45,6 @@ def comment_list_get():
     rc = create_connection()
 
     response = rc.xrevrange('chat', '+', '-', 'COUNT', '20')
-
     logging.info('latest response : %s', response)
 
     return {'response': stream_data_to_json(response)}
@@ -65,5 +64,6 @@ def comment_list_get(latest_seq_id):
 
     rc = create_connection()
     response = rc.xrange('chat', next_seq_id, '+')
+    logging.info('latest comments next id response : %s', response)
 
     return {'response': stream_data_to_json(response)}

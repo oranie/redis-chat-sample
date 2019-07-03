@@ -25,7 +25,7 @@ def stream_data_to_json(response):
                 d = dict(zip(comment[0::2], comment[1::2]))
                 latest_comments.append(d)
 
-    print(latest_comments)
+    logging.info('latest comments data : %s', latest_comments)
     return latest_comments
 
 

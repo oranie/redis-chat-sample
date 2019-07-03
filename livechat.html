@@ -15,7 +15,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
+
 <div id="app">
     <p>{{ title }}</p>
     <button v-on:click="refresh" class="btn btn-primary">Refresh server status
@@ -23,6 +25,72 @@
     <table class="table">
         <tr v-for="server_status">
             <td>{{ server_status.status }}</td>
+        </tr>
+    </table>
+</div>
+
+<div id="add">
+    <form @submit.prevent="onsubmit">
+        <div class="form-row">
+            <div class="col">
+                <label>Name</label>
+                <input
+                        class="form-control"
+                        v-model="form.name"
+                        type="text"
+                        required
+                        placeholder="ユーザー名をいれてね">
+            </div>
+            <div class="col">
+                <label>Comment</label>
+                <input
+                        class="form-control"
+                        v-model="form.comment"
+                        type="text"
+                        title="comment"
+                        placeholder="なにかかいてね">
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Submit
+            </button>
+        </div>
+    </form>
+    <pre>{{ result }}</pre>
+</div>
+
+<div id="latest">
+    <button v-on:click="get_latest" class="btn btn-primary">latest messages
+    </button>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Comment</th>
+        </tr>
+        </thead>
+        <tr v-for="comment in latest_comments.response">
+            <td>{{ comment.name }}</td>
+            <td>{{ comment.comment }}</td>
+        </tr>
+    </table>
+</div>
+
+<div id="all">
+    <button v-on:click="get_all" class="btn btn-primary">all messages
+    </button>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Comment</th>
+        </tr>
+        </thead>
+        <tr v-for="comment in all_comments.response">
+            <td>{{ comment.name }}</td>
+            <td>{{ comment.comment }}</td>
         </tr>
     </table>
 </div>
@@ -50,37 +118,6 @@
     });
 </script>
 
-
-<div id="add">
-    <form @submit.prevent="onsubmit">
-        <div class="form-row">
-            <div class="col">
-            <label>Name</label>
-            <input
-                    class="form-control"
-                    v-model="form.name"
-                    type="text"
-                    required
-                    placeholder="ユーザー名をいれてね">
-            </div>
-            <div class="col">
-            <label>Comment</label>
-            <input
-                    class="form-control"
-                    v-model="form.comment"
-                    type="text"
-                    title="comment"
-                    placeholder="なにかかいてね">
-            </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Submit
-            </button>
-        </div>
-    </form>
-    <pre>{{ result }}</pre>
-</div>
-
 <script>
     var add =new Vue({
         el: "#add",
@@ -104,18 +141,6 @@
     });
 </script>
 
-<div id="latest">
-    <button v-on:click="get_latest" class="btn btn-primary">latest messages
-    </button>
-
-    <table class="table">
-
-        <tr v-for="latest_comments">
-            <td>{{ latest_comments.response }}</td>
-        </tr>
-    </table>
-</div>
-
 <script>
     var latest_comments = new Vue({
         el: "#latest",
@@ -137,17 +162,6 @@
         }
     });
 </script>
-
-<div id="all">
-    <button v-on:click="get_all" class="btn btn-primary">all messages
-    </button>
-
-    <table class="table">
-        <tr v-for="all_comments">
-            <td>{{ all_comments.response }}</td>
-        </tr>
-    </table>
-</div>
 
 <script>
     var all_comments = new Vue({
