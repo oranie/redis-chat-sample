@@ -97,7 +97,7 @@
                     comment: this.form.comment
                 }).then(
                     response => {
-                    this.result = Object.assign({}, this.form);
+                    this.result = Object.assign({}, this.form, this.server_status = response.data);
                 });
             }
         }

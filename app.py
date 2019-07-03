@@ -1,7 +1,7 @@
 from chalice import Chalice
 from datetime import datetime
 from chalicelib.redis import StreamStrictRedisCluster
-from chalicelib.redis import create_connection
+from chalicelib.redis import create_connection, stream_data_to_json
 import logging
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
@@ -37,7 +37,7 @@ def comment_list_get():
     rc = create_connection()
 
     response = rc.xrange('chat', '-', '+')
-    return {'response': response}
+    return {'response': stream_data_to_json(response)}
 
 
 @app.route('/chat/comments/latest', methods=['GET'], cors=True)
@@ -45,7 +45,10 @@ def comment_list_get():
     rc = create_connection()
 
     response = rc.xrevrange('chat', '+', '-', 'COUNT', '20')
-    return {'response': response}
+
+    logging.info('latest response : %s', response)
+
+    return {'response': stream_data_to_json(response)}
 
 
 @app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
@@ -63,4 +66,4 @@ def comment_list_get(latest_seq_id):
     rc = create_connection()
     response = rc.xrange('chat', next_seq_id, '+')
 
-    return {'response': response}
+    return {'response': stream_data_to_json(response)}
