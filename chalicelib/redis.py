@@ -17,13 +17,17 @@ def create_connection():
 
 def stream_data_to_json(response):
     latest_comments = []
+
     for r in range(len(response)):
         # example data struct : ['1562118559025-0', ['name', 'すたじお', 'comment', 'Chalice']]
         for i in range(len(response[r])):
             if i % 2 == 1:
                 comment = response[r][i]
                 d = dict(zip(comment[0::2], comment[1::2]))
+                d['stream_seq_id'] = seq_id
                 latest_comments.append(d)
+            else:
+                seq_id = response[r][i]
 
     logging.info('latest comments data : %s', latest_comments)
     return latest_comments

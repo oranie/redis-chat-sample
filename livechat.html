@@ -19,7 +19,7 @@
 <body>
 
 <div id="app">
-    <p>{{ title }}</p>
+    <div class="border-top">{{ title }}</div>
     <button v-on:click="refresh" class="btn btn-primary">Refresh server status
     </button>
     <table class="table">
@@ -30,6 +30,7 @@
 </div>
 
 <div id="add">
+    <div class="border-top">コメント書き込み</div>
     <form @submit.prevent="onsubmit">
         <div class="form-row">
             <div class="col">
@@ -60,7 +61,8 @@
 </div>
 
 <div id="latest">
-    <button v-on:click="get_latest" class="btn btn-primary">latest messages
+    <div class="border-top">最新コメント取得</div>
+    <button v-on:click="get_latest" class="btn btn-primary">latest comments
     </button>
 
     <table class="table">
@@ -78,7 +80,8 @@
 </div>
 
 <div id="all">
-    <button v-on:click="get_all" class="btn btn-primary">all messages
+    <div class="border-top">全コメント取得</div>
+    <button v-on:click="get_all" class="btn btn-primary">all comments
     </button>
 
     <table class="table">
@@ -124,7 +127,8 @@
         data() {
             return {
                 form: {},
-                result: {}
+                result: {},
+                latest: {}
             }
         },
         methods: {
@@ -142,10 +146,31 @@
 </script>
 
 <script>
+    var latest_comments_specify_number = new Vue({
+        el: "#latest_comments_specify_number",
+        data: {
+            latest_comments_specify_number: []
+        },
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+        },
+        "methods": {
+            get_latest_comments_specify_number: function (e) {
+                axios.get('http://localhost:8000/chat/comments/latest/{{seq_id}}', {}).then(
+                    response = > {
+                    this.latest_comments_specify_number = response.data;
+            })
+                ;
+            }
+        }
+    });
+</script>
+
+<script>
     var latest_comments = new Vue({
         el: "#latest",
         data: {
-            title: "Chat",
             latest_comments: []
         },
         headers: {
@@ -167,7 +192,6 @@
     var all_comments = new Vue({
         el: "#all",
         data: {
-            title: "Chat",
             all_comments: []
         },
         headers: {
