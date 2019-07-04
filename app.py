@@ -29,11 +29,11 @@ def chat():
     html = open("./chalicelib/livechat.html", "r")
     base_lines = html.read()
     if os.environ['REDIS_ENDPOINT'] == 'localhost':
-        print('local dayo')
+        logging.info('return local envroiment html')
         lines = base_lines
     else:
-        lines = re.sub('http://localhost:8000/', 'https://xgc5p4eaah.execute-api.ap-northeast-1.amazonaws.com/api/',
-                       base_lines)
+        logging.info('return dev envroiment html')
+        lines = re.sub('http://localhost:8000/', 'https://xgc5p4eaah.execute-api.ap-northeast-1.amazonaws.com/api/',base_lines)
 
     html.close()
 
