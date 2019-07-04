@@ -59,8 +59,6 @@
     </form>
 
     <pre>{{ result }}</pre>
-    <pre>{{ url }}</pre>
-    <pre>{{ latest_comments }}</pre>
 </div>
 
 <div id="latest">
@@ -119,7 +117,7 @@
         methods: {
             refresh: function (e) {
                 axios.get('http://localhost:8000/', {}).then(
-                    response = > {
+                    response => {
                     this.server_status = response.data;
             })
                 ;
@@ -149,7 +147,7 @@
                     name: this.form.name,
                     comment: this.form.comment
                 }).then(
-                    response = > {
+                    response => {
                     this.result = Object.assign({}, this.form, this.server_status = response.data);
                 this.url = 'http://localhost:8000/chat/comments/latest/' + this.result.comment_seq_id;
                 /*
@@ -181,7 +179,7 @@
                  */
 
                 axios.get('http://localhost:8000/chat/comments/latest', {}).then(
-                    response = > {
+                    response => {
                     this.latest_comments = response.data;
             })
                 ;
@@ -208,7 +206,7 @@
         methods: {
             get_all: function (e) {
                 axios.get('http://localhost:8000/chat/comments/all', {}).then(
-                    response = > {
+                    response => {
                     this.all_comments = response.data;
             })
                 ;
