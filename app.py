@@ -1,8 +1,10 @@
-from chalice import Chalice
+from chalice import Chalice, Response
 from datetime import datetime
 from chalicelib.redis import StreamStrictRedisCluster
 from chalicelib.redis import create_connection, stream_data_to_json
 import logging
+import os
+import re
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -19,6 +21,24 @@ def index():
     result = rc.get('key1')
 
     return {'status': 'server is good!  ' + result}
+
+
+@app.route('/chat', cors=True)
+def chat():
+    # Demo html
+    html = open("./chalicelib/livechat.html", "r")
+    base_lines = html.read()
+    if os.environ['REDIS_ENDPOINT'] == 'localhost':
+        print('local dayo')
+        lines = base_lines
+    else:
+        lines = re.sub('http://localhost:8000/', 'https://xgc5p4eaah.execute-api.ap-northeast-1.amazonaws.com/api/',
+                       base_lines)
+
+    html.close()
+
+    return Response(body=str(lines), status_code=200,
+                    headers={'Content-Type': 'text/html', "Access-Control-Allow-Origin": "*"})
 
 
 @app.route('/chat/comments/add', methods=['POST'], cors=True)
