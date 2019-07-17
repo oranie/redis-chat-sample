@@ -4,6 +4,7 @@
   "subnet_ids": ["subnet-a871b0f1", "subnet-002b8477","subnet-0ee3ba2b887899461","subnet-c70d07b1"],
   "security_group_ids": ["sg-2379e846"],
   "autogen_policy": false,
+  "lambda_memory_size": "2048",
   "stages": {
     "local": {
       "api_gateway_stage": "api",

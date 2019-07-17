@@ -20,7 +20,7 @@ def index():
     rc.set('key1', now)
     result = rc.get('key1')
 
-    return {'status': 'server is good!  ' + result}
+    return {'status': 'server status is good!  ' + result}
 
 
 @app.route('/chat', cors=True)

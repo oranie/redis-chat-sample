@@ -1,6 +1,6 @@
-This project is internal trainning and demo app.
+## This project is internal trainning and demo app.
 
-Redis and DynamoDB sample app
+Redis (and DynamoDB, other NoSQL Datastore soon...) sample app
 
 ## Envroiment
 Redis 5.0+
@@ -9,6 +9,8 @@ Python 3.7.3+
 
 Redis Cluster mode launch (local,production. Not supported non cluster mode)
 
+Please read Chalice project doc.
+https://github.com/aws/chalice
 
 ## Deploy
 local test
