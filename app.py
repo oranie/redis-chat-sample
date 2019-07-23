@@ -1,6 +1,5 @@
 from chalice import Chalice, Response
 from datetime import datetime
-from chalicelib.redis import StreamStrictRedisCluster
 from chalicelib.redis import create_connection, stream_data_to_json
 import logging
 import os
@@ -73,7 +72,7 @@ def comment_list_get():
 
 
 @app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
-def comment_list_get(latest_seq_id):
+def comment_seq_get(latest_seq_id):
     latest_list = latest_seq_id.split('-')
     logging.info(
         'latest comments GET request latest seq id : %s', *latest_list)
