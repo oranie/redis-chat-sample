@@ -1,5 +1,7 @@
 ## This project is internal trainning and demo app.
 
+[![CircleCI](https://circleci.com/gh/oranie/redis-chat-sample.svg?style=svg&circle-token=a01832eafba8960db20af28fbac10ceed4179ba2)](https://circleci.com/gh/oranie/redis-chat-sample)
+
 Redis sample app
 
 ## Envroiment
