@@ -54,7 +54,7 @@ def comment_add():
 
 
 @app.route('/chat/comments/all', methods=['GET'], cors=True)
-def comment_list_get():
+def comment_all_get():
     rc = create_connection()
 
     response = rc.xrange('chat', '-', '+')
@@ -62,7 +62,7 @@ def comment_list_get():
 
 
 @app.route('/chat/comments/latest', methods=['GET'], cors=True)
-def comment_list_get():
+def comment_latest_get():
     rc = create_connection()
 
     response = rc.xrevrange('chat', '+', '-', 'COUNT', '20')
