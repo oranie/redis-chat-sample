@@ -99,7 +99,6 @@ class DdbChat():
             for index, item in enumerate(response['Items']):
                 result.append(item)
 
-
         return result
 
 if __name__ == "__main__":
