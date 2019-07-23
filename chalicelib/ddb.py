@@ -1,7 +1,6 @@
-import os
 import logging
 import boto3
-from boto3.dynamodb.conditions import Key, Attr
+from boto3.dynamodb.conditions import Key
 import datetime
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)

@@ -25,11 +25,11 @@ def stream_data_to_json(response):
             if i % 2 == 1:
                 comment = response[r][i]
                 d = dict(zip(comment[0::2], comment[1::2]))
-                d['stream_seq_id'] = seq_id
+                seq_id = d['stream_seq_id']
                 latest_comments.append(d)
             else:
                 seq_id = response[r][i]
-
+            logging.info(seq_id)
     # example data struct :
     # [
     #   {'name': 'ザビオ', 'comment': 'zabbix', 'stream_seq_id': '1562118551119-0'},
