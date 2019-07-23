@@ -33,7 +33,8 @@ def chat():
         lines = base_lines
     else:
         logging.info('return dev envroiment html')
-        lines = re.sub('http://localhost:8000/', 'https://xgc5p4eaah.execute-api.ap-northeast-1.amazonaws.com/api/',base_lines)
+        lines = re.sub('http://localhost:8000/',
+                       'https://xgc5p4eaah.execute-api.ap-northeast-1.amazonaws.com/api/', base_lines)
 
     html.close()
 
@@ -48,7 +49,8 @@ def comment_add():
 
     rc = create_connection()
 
-    response_xadd = rc.xadd('chat', '*', 'name', body['name'], 'comment', body['comment'])
+    response_xadd = rc.xadd('chat', '*', 'name',
+                            body['name'], 'comment', body['comment'])
     return {'state': 'Commment add OK', 'comment_seq_id': response_xadd}
 
 
@@ -73,7 +75,8 @@ def comment_list_get():
 @app.route('/chat/comments/latest/{latest_seq_id}', methods=['GET'], cors=True)
 def comment_list_get(latest_seq_id):
     latest_list = latest_seq_id.split('-')
-    logging.info('latest comments GET request latest seq id : %s', *latest_list)
+    logging.info(
+        'latest comments GET request latest seq id : %s', *latest_list)
 
     # Increment redis streams data type latest seq id
     # To get next comments

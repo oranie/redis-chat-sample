@@ -4,6 +4,7 @@ import logging
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
+
 def create_connection():
     endpoint = os.environ['REDIS_ENDPOINT']
     port = os.environ['REDIS_PORT']
@@ -44,7 +45,8 @@ class StreamStrictRedisCluster(StrictRedisCluster):
 
     # response_xadd = rc.xadd('chat', '*', 100, {body['name']: body['comment']})
     def xadd(self, stream, seq_id, name, name_value, comment, comment_value):
-        args = ['XADD', stream, seq_id, name, name_value, comment, comment_value]
+        args = ['XADD', stream, seq_id, name,
+                name_value, comment, comment_value]
         logging.info('XADD params : %s', args)
         response = self.execute_command(*args)
         return response
