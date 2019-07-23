@@ -1,0 +1,7 @@
+
+.chalice/deployments/
+.idea/
+__pycache__/
+chalicelib/__pycache__/redis.cpython-37.pyc
+redis-python-serverless.iml
+venv/

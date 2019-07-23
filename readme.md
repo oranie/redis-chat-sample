@@ -1,6 +1,6 @@
 ## This project is internal trainning and demo app.
 
-Redis (and DynamoDB, other NoSQL Datastore soon...) sample app
+Redis sample app
 
 ## Envroiment
 Redis 5.0+
