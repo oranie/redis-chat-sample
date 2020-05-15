@@ -14,7 +14,7 @@
     },
     "dev": {
       "environment_variables": {
-        "REDIS_ENDPOINT": "oranie-cluster.ab0uwo.clustercfg.apne1.cache.amazonaws.com",
+        "REDIS_ENDPOINT": "oranie.ab0uwo.clustercfg.apne1.cache.amazonaws.com",
         "REDIS_PORT": "6379"
       }
     }
