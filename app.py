@@ -58,6 +58,7 @@ def comment_all_get():
     rc = create_connection()
 
     response = rc.xrange('chat', '-', '+')
+    logging.info('comment all response : %s', response)
     return {'response': stream_data_to_json(response)}
 
 
