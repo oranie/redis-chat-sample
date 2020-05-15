@@ -1,7 +1,7 @@
 {
   "version": "2.0",
   "app_name": "chalice-nosql-sample",
-  "subnet_ids": ["subnet-a871b0f1", "subnet-002b8477","subnet-0ee3ba2b887899461","subnet-c70d07b1"],
+  "subnet_ids": ["subnet-a871b0f1", "subnet-002b8477"],
   "security_group_ids": ["sg-2379e846"],
   "autogen_policy": false,
   "stages": {

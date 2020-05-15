@@ -21,7 +21,9 @@ def stream_data_to_json(response):
 
     for r in range(len(response)):
         # example data struct : ['1562118559025-0', ['name', 'すたじお', 'comment', 'Chalice']]
+        logging.info(r)
         for i in range(len(response[r])):
+            logging.info(i)
             if i % 2 == 1:
                 comment = response[r][i]
                 d = dict(zip(comment[0::2], comment[1::2]))
